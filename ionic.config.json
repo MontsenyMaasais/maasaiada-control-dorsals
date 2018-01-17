@@ -1,6 +1,6 @@
 {
   "name": "maasaiada-control-dorsals",
-  "app_id": "",
+  "app_id": "6b26567f",
   "type": "ionic-angular",
   "integrations": {
     "cordova": {}

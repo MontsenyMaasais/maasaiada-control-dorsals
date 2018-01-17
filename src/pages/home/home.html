@@ -1,18 +1,67 @@
 <ion-header>
   <ion-navbar>
-    <button ion-button menuToggle>
-      <ion-icon name="menu"></ion-icon>
-    </button>
-    <ion-title>Home</ion-title>
+    <!--<button ion-button menuToggle>-->
+      <!--<ion-icon name="menu"></ion-icon>-->
+    <!--</button>-->
+    <ion-title>Maasaiada 2018 / control de pas</ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content padding>
-  <h3>Ionic Menu Starter</h3>
+  <!--<h3>Punt de pas</h3>-->
 
-  <p>
-    If you get lost, the <a href="http://ionicframework.com/docs/v2">docs</a> will show you the way.
-  </p>
+  <form (ngSubmit)="addCronoLog()" name="controlPasForm">
+    <ion-item>
+      <ion-label color="primary">Nom</ion-label>
+      <ion-input [(ngModel)]="currentNom"
+                 name="currentNom"
+                 [disabled]="disableBasicInfo"
+                 placeholder="El teu nom"
+                 required></ion-input>
+    </ion-item>
 
-  <button ion-button secondary menuToggle>Toggle Menu</button>
+    <ion-list>
+      <ion-item>
+        <ion-label color="primary">Control</ion-label>
+        <ion-select [(ngModel)]="currentControl"
+                    name="currentControl"
+                    [disabled]="disableBasicInfo"
+                    interface="action-sheet"
+                    required>
+          <ion-option *ngFor="let c of controls | async; let i = index" [value]="c.nom">{{c.nom || '-sense nom-'}} <small>(c: {{c.curta || '-'}}, l: {{c.llarga || '-'}})</small></ion-option>
+        </ion-select>
+      </ion-item>
+    </ion-list>
+
+    <ion-item>
+      <ion-label color="primary">Dorsal</ion-label>
+      <ion-input #inputNumDorsal
+                 [(ngModel)]="currentDorsal"
+                 name="currentDorsal"
+                 type="number"
+                 placeholder="Número de dorsal"
+                 max="500"
+                 required></ion-input>
+    </ion-item>
+
+    <!--<button ion-button secondary menuToggle>Toggle Menu</button>-->
+    <button ion-button
+            secondary
+            type="submit"
+            [disabled]="addCronoLogDisabled()"
+            full>
+      Registrar corredor {{ currentDorsal }}
+    </button>
+  </form>
+
+  <ion-item-divider></ion-item-divider>
+
+  <ion-chip *ngIf="lastDorsalRegistered">
+    <ion-icon name="pin"></ion-icon>
+    <ion-label>Últim dorsal: <strong>{{ lastDorsalRegistered }}</strong></ion-label>
+  </ion-chip>
+
+  <!--<ion-item *ngFor="let logItem of log | async">-->
+    <!--{{logItem | json}}-->
+  <!--</ion-item>-->
 </ion-content>
